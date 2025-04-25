@@ -1,0 +1,115 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Guidelines for implementing Next.js API routes
+globs: 
+alwaysApply: false
+---
+# API Routes
+
+## Standard Format
+
+Use this format for API routes:
+
+```ts
+import { Ratelimit } from '@upstash/ratelimit'
+import { headers } from 'next/headers'
+import { NextRequest, NextResponse } from 'next/server'
+
+import { SearchPricesResponse } from '@/contracts/price'
+import { LogEvents } from '@/lib/openpanel/events'
+import { setupAnalytics } from '@/lib/openpanel/server'
+import {
+  getSearchProducts,
+  getSelectedStore,
+} from '@/lib/prisma/queries/cached-queries'
+import { client as RedisClient } from '@/lib/redis'
+
+const ratelimit = new Ratelimit({
+  limiter: Ratelimit.fixedWindow(10, '10s'),
+  redis: RedisClient,
+})
+
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url)
+  const searchQuery = searchParams.get('query')
+  const ip = headers().get('x-forwarded-for')
+
+  const { store_id } = await getSelectedStore()
+  const analytics = await setupAnalytics()
+
+  analytics.track({
+    event: LogEvents.SearchTopBarProducts.name,
+    channel: LogEvents.SearchTopBarProducts.channel,
+  })
+
+  const { success } = await ratelimit.limit(
+    `${ip}-${LogEvents.SearchTopBarProducts.name}`,
+  )
+
+  if (!success) {
+    return NextResponse.json(
+      {
+        error: 'Muitas requisições',
+      },
+      { status: 429 },
+    )
+  }
+
+  if (!searchQuery || searchQuery.length < 3) {
+    return NextResponse.json<SearchPricesResponse>({
+      prices: [],
+      subCategories: [],
+      brands: [],
+    })
+  }
+
+  const searchProducts = await getSearchProducts(searchQuery, store_id)
+
+  return NextResponse.json(searchProducts)
+}
+
+// For routes without params
+export const POST = withError(async (request: Request) => {
+  const session = await auth();
+  if (!session?.user.email)
+    return NextResponse.json({ error: "Not authenticated" });
+
+  const json = await request.json();
+  const body = apiNameBody.parse(json);
+
+  const result = await updateApiName(body, { email: session.user.email });
+
+  return NextResponse.json(result);
+});
+
+// For routes with params (note the params promise which is how Next.js 15+ works)
+export const GET = withError(
+  async (
+    request: Request,
+    { params }: { params: Promise<{ slug: string }> }
+  ) => {
+    const session = await auth();
+    if (!session?.user.email)
+      return NextResponse.json({ error: "Not authenticated" });
+
+    const { slug } = await params;
+    // Use the slug parameter...
+
+    return NextResponse.json({ result });
+  }
+);
+```
+
+## Implementation Guidelines
+
+- Use Zod for request body validation
+- Create separate functions for business logic
+- Wrap route handlers with `withError` middleware
+- Always validate authentication with `getUser()` on cached-queries
+- Export typed responses for client usage
+- For routes with dynamic parameters, use the new Next.js 15+ params format with async params
+

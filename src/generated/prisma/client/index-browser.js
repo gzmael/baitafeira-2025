@@ -1,0 +1,764 @@
+
+Object.defineProperty(exports, "__esModule", { value: true });
+
+const {
+  Decimal,
+  objectEnumValues,
+  makeStrictEnum,
+  Public,
+  getRuntime,
+  skip
+} = require('./runtime/index-browser.js')
+
+
+const Prisma = {}
+
+exports.Prisma = Prisma
+exports.$Enums = {}
+
+/**
+ * Prisma Client JS version: 6.6.0
+ * Query Engine version: f676762280b54cd07c770017ed3711ddde35f37a
+ */
+Prisma.prismaVersion = {
+  client: "6.6.0",
+  engine: "f676762280b54cd07c770017ed3711ddde35f37a"
+}
+
+Prisma.PrismaClientKnownRequestError = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`PrismaClientKnownRequestError is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)};
+Prisma.PrismaClientUnknownRequestError = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`PrismaClientUnknownRequestError is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)}
+Prisma.PrismaClientRustPanicError = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`PrismaClientRustPanicError is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)}
+Prisma.PrismaClientInitializationError = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`PrismaClientInitializationError is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)}
+Prisma.PrismaClientValidationError = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`PrismaClientValidationError is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)}
+Prisma.Decimal = Decimal
+
+/**
+ * Re-export of sql-template-tag
+ */
+Prisma.sql = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`sqltag is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)}
+Prisma.empty = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`empty is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)}
+Prisma.join = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`join is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)}
+Prisma.raw = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`raw is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)}
+Prisma.validator = Public.validator
+
+/**
+* Extensions
+*/
+Prisma.getExtensionContext = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`Extensions.getExtensionContext is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)}
+Prisma.defineExtension = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`Extensions.defineExtension is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)}
+
+/**
+ * Shorthand utilities for JSON filtering
+ */
+Prisma.DbNull = objectEnumValues.instances.DbNull
+Prisma.JsonNull = objectEnumValues.instances.JsonNull
+Prisma.AnyNull = objectEnumValues.instances.AnyNull
+
+Prisma.NullTypes = {
+  DbNull: objectEnumValues.classes.DbNull,
+  JsonNull: objectEnumValues.classes.JsonNull,
+  AnyNull: objectEnumValues.classes.AnyNull
+}
+
+
+
+/**
+ * Enums
+ */
+
+exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
+  ReadUncommitted: 'ReadUncommitted',
+  ReadCommitted: 'ReadCommitted',
+  RepeatableRead: 'RepeatableRead',
+  Serializable: 'Serializable'
+});
+
+exports.Prisma.AddressScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  zipCode: 'zipCode',
+  city: 'city',
+  state: 'state',
+  street: 'street',
+  number: 'number',
+  neighborhood: 'neighborhood',
+  reference: 'reference',
+  complement: 'complement',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  isMain: 'isMain',
+  profileId: 'profileId',
+  storeId: 'storeId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ProfileScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  lastName: 'lastName',
+  cpf: 'cpf',
+  birthDate: 'birthDate',
+  phone: 'phone',
+  status: 'status',
+  typeUser: 'typeUser',
+  preferences: 'preferences',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  inactiveAt: 'inactiveAt',
+  userId: 'userId'
+};
+
+exports.Prisma.StoreScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  nameResponsible: 'nameResponsible',
+  reasonSocial: 'reasonSocial',
+  cnpj: 'cnpj',
+  phone: 'phone',
+  phoneResponsible: 'phoneResponsible',
+  image: 'image',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  inactiveAt: 'inactiveAt',
+  deletedAt: 'deletedAt',
+  planId: 'planId'
+};
+
+exports.Prisma.InvoiceScalarFieldEnum = {
+  id: 'id',
+  amount: 'amount',
+  dueDate: 'dueDate',
+  paymentDate: 'paymentDate',
+  description: 'description',
+  paymentMethod: 'paymentMethod',
+  status: 'status',
+  storeId: 'storeId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  canceledAt: 'canceledAt'
+};
+
+exports.Prisma.ProfileStoreScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  lastName: 'lastName',
+  phone: 'phone',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  inactiveAt: 'inactiveAt',
+  storeId: 'storeId',
+  status: 'status',
+  typeUser: 'typeUser',
+  preferences: 'preferences'
+};
+
+exports.Prisma.ShippingScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  attributes: 'attributes',
+  minimumAmount: 'minimumAmount',
+  storeId: 'storeId'
+};
+
+exports.Prisma.PlanScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  cost: 'cost',
+  period: 'period',
+  attributes: 'attributes',
+  type: 'type',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ZipCodeScalarFieldEnum = {
+  id: 'id',
+  zipCode: 'zipCode',
+  ibgeCode: 'ibgeCode',
+  city: 'city',
+  state: 'state',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SlideScalarFieldEnum = {
+  id: 'id',
+  imageName: 'imageName',
+  image: 'image',
+  highlighted: 'highlighted',
+  url: 'url',
+  storeId: 'storeId'
+};
+
+exports.Prisma.DepartmentScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  imageUrl: 'imageUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  departmentId: 'departmentId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SubCategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  categoryId: 'categoryId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.BrandScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  color: 'color',
+  imageUrl: 'imageUrl',
+  productImage: 'productImage',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ProductScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  barCode: 'barCode',
+  description: 'description',
+  isFractional: 'isFractional',
+  unitType: 'unitType',
+  quantity: 'quantity',
+  status: 'status',
+  subCategoryId: 'subCategoryId',
+  departmentId: 'departmentId',
+  categoryId: 'categoryId',
+  brandId: 'brandId',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PriceScalarFieldEnum = {
+  id: 'id',
+  cost: 'cost',
+  offerCost: 'offerCost',
+  offerStartDate: 'offerStartDate',
+  offerEndDate: 'offerEndDate',
+  isOffer: 'isOffer',
+  isFeatured: 'isFeatured',
+  updatedBy: 'updatedBy',
+  maxUnits: 'maxUnits',
+  isEnabledSale: 'isEnabledSale',
+  isFractionalSale: 'isFractionalSale',
+  productId: 'productId',
+  storeId: 'storeId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.StockScalarFieldEnum = {
+  id: 'id',
+  quantity: 'quantity',
+  minAlert: 'minAlert',
+  priceId: 'priceId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ProductImageScalarFieldEnum = {
+  id: 'id',
+  imageUrl: 'imageUrl',
+  imageName: 'imageName',
+  productId: 'productId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.TagScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ProductTagScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  tagId: 'tagId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.OrderScalarFieldEnum = {
+  id: 'id',
+  number: 'number',
+  total: 'total',
+  amount: 'amount',
+  discount: 'discount',
+  shipping: 'shipping',
+  items: 'items',
+  address: 'address',
+  status: 'status',
+  paymentMethod: 'paymentMethod',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  profileId: 'profileId',
+  storeId: 'storeId'
+};
+
+exports.Prisma.ShoppingCartScalarFieldEnum = {
+  id: 'id',
+  items: 'items',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  storeId: 'storeId',
+  profileId: 'profileId'
+};
+
+exports.Prisma.AuthUserScalarFieldEnum = {
+  instance_id: 'instance_id',
+  id: 'id',
+  aud: 'aud',
+  role: 'role',
+  email: 'email',
+  encrypted_password: 'encrypted_password',
+  email_confirmed_at: 'email_confirmed_at',
+  invited_at: 'invited_at',
+  confirmation_token: 'confirmation_token',
+  confirmation_sent_at: 'confirmation_sent_at',
+  recovery_token: 'recovery_token',
+  recovery_sent_at: 'recovery_sent_at',
+  email_change_token_new: 'email_change_token_new',
+  email_change: 'email_change',
+  email_change_sent_at: 'email_change_sent_at',
+  last_sign_in_at: 'last_sign_in_at',
+  raw_app_meta_data: 'raw_app_meta_data',
+  raw_user_meta_data: 'raw_user_meta_data',
+  is_super_admin: 'is_super_admin',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  phone: 'phone',
+  phone_confirmed_at: 'phone_confirmed_at',
+  phone_change: 'phone_change',
+  phone_change_token: 'phone_change_token',
+  phone_change_sent_at: 'phone_change_sent_at',
+  confirmed_at: 'confirmed_at',
+  email_change_token_current: 'email_change_token_current',
+  email_change_confirm_status: 'email_change_confirm_status',
+  banned_until: 'banned_until',
+  reauthentication_token: 'reauthentication_token',
+  reauthentication_sent_at: 'reauthentication_sent_at',
+  is_sso_user: 'is_sso_user',
+  deleted_at: 'deleted_at'
+};
+
+exports.Prisma.SortOrder = {
+  asc: 'asc',
+  desc: 'desc'
+};
+
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
+exports.Prisma.JsonNullValueInput = {
+  JsonNull: Prisma.JsonNull
+};
+
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
+exports.Prisma.AddressOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  zipCode: 'zipCode',
+  city: 'city',
+  state: 'state',
+  street: 'street',
+  number: 'number',
+  neighborhood: 'neighborhood',
+  reference: 'reference',
+  complement: 'complement',
+  profileId: 'profileId',
+  storeId: 'storeId'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
+
+exports.Prisma.ProfileOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  lastName: 'lastName',
+  cpf: 'cpf',
+  phone: 'phone',
+  userId: 'userId'
+};
+
+exports.Prisma.StoreOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  nameResponsible: 'nameResponsible',
+  reasonSocial: 'reasonSocial',
+  cnpj: 'cnpj',
+  phone: 'phone',
+  phoneResponsible: 'phoneResponsible',
+  image: 'image',
+  planId: 'planId'
+};
+
+exports.Prisma.InvoiceOrderByRelevanceFieldEnum = {
+  id: 'id',
+  description: 'description',
+  storeId: 'storeId'
+};
+
+exports.Prisma.ProfileStoreOrderByRelevanceFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  lastName: 'lastName',
+  phone: 'phone',
+  storeId: 'storeId'
+};
+
+exports.Prisma.ShippingOrderByRelevanceFieldEnum = {
+  id: 'id',
+  storeId: 'storeId'
+};
+
+exports.Prisma.PlanOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description'
+};
+
+exports.Prisma.ZipCodeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  zipCode: 'zipCode',
+  ibgeCode: 'ibgeCode',
+  city: 'city',
+  state: 'state'
+};
+
+exports.Prisma.SlideOrderByRelevanceFieldEnum = {
+  id: 'id',
+  imageName: 'imageName',
+  image: 'image',
+  url: 'url',
+  storeId: 'storeId'
+};
+
+exports.Prisma.DepartmentOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  imageUrl: 'imageUrl'
+};
+
+exports.Prisma.CategoryOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  departmentId: 'departmentId'
+};
+
+exports.Prisma.SubCategoryOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  categoryId: 'categoryId'
+};
+
+exports.Prisma.BrandOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  color: 'color',
+  imageUrl: 'imageUrl',
+  productImage: 'productImage'
+};
+
+exports.Prisma.ProductOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  barCode: 'barCode',
+  description: 'description',
+  subCategoryId: 'subCategoryId',
+  departmentId: 'departmentId',
+  categoryId: 'categoryId',
+  brandId: 'brandId',
+  createdBy: 'createdBy'
+};
+
+exports.Prisma.PriceOrderByRelevanceFieldEnum = {
+  id: 'id',
+  updatedBy: 'updatedBy',
+  productId: 'productId',
+  storeId: 'storeId'
+};
+
+exports.Prisma.StockOrderByRelevanceFieldEnum = {
+  id: 'id',
+  priceId: 'priceId'
+};
+
+exports.Prisma.ProductImageOrderByRelevanceFieldEnum = {
+  id: 'id',
+  imageUrl: 'imageUrl',
+  imageName: 'imageName',
+  productId: 'productId'
+};
+
+exports.Prisma.TagOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug'
+};
+
+exports.Prisma.ProductTagOrderByRelevanceFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  tagId: 'tagId'
+};
+
+exports.Prisma.OrderOrderByRelevanceFieldEnum = {
+  id: 'id',
+  number: 'number',
+  profileId: 'profileId',
+  storeId: 'storeId'
+};
+
+exports.Prisma.ShoppingCartOrderByRelevanceFieldEnum = {
+  id: 'id',
+  storeId: 'storeId',
+  profileId: 'profileId'
+};
+
+exports.Prisma.AuthUserOrderByRelevanceFieldEnum = {
+  instance_id: 'instance_id',
+  id: 'id',
+  aud: 'aud',
+  role: 'role',
+  email: 'email',
+  encrypted_password: 'encrypted_password',
+  confirmation_token: 'confirmation_token',
+  recovery_token: 'recovery_token',
+  email_change_token_new: 'email_change_token_new',
+  email_change: 'email_change',
+  phone: 'phone',
+  phone_change: 'phone_change',
+  phone_change_token: 'phone_change_token',
+  email_change_token_current: 'email_change_token_current',
+  reauthentication_token: 'reauthentication_token'
+};
+exports.StatusUser = exports.$Enums.StatusUser = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+  BLOCKED: 'BLOCKED'
+};
+
+exports.TypeUser = exports.$Enums.TypeUser = {
+  ADMIN: 'ADMIN',
+  USER: 'USER'
+};
+
+exports.StatusStore = exports.$Enums.StatusStore = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+  DELETED: 'DELETED'
+};
+
+exports.PaymentMethod = exports.$Enums.PaymentMethod = {
+  PIX: 'PIX',
+  CREDIT_CARD: 'CREDIT_CARD',
+  DEBIT_CARD: 'DEBIT_CARD',
+  BANK_SLIP: 'BANK_SLIP',
+  MONEY: 'MONEY'
+};
+
+exports.StatusInvoice = exports.$Enums.StatusInvoice = {
+  PENDING: 'PENDING',
+  PAID: 'PAID',
+  CANCELED: 'CANCELED'
+};
+
+exports.StoreTypeUser = exports.$Enums.StoreTypeUser = {
+  MANAGER: 'MANAGER',
+  SELLER: 'SELLER'
+};
+
+exports.ShippingType = exports.$Enums.ShippingType = {
+  FIXED: 'FIXED',
+  FREE: 'FREE',
+  NEIGHBORHOOD: 'NEIGHBORHOOD',
+  DYNAMIC: 'DYNAMIC'
+};
+
+exports.PlanType = exports.$Enums.PlanType = {
+  MONTHLY: 'MONTHLY',
+  YEARLY: 'YEARLY'
+};
+
+exports.UnitType = exports.$Enums.UnitType = {
+  M2: 'M2',
+  CM: 'CM',
+  ME: 'ME',
+  UN: 'UN',
+  CT: 'CT',
+  CX: 'CX',
+  PA: 'PA',
+  PC: 'PC',
+  PT: 'PT',
+  RL: 'RL',
+  KG: 'KG',
+  GR: 'GR',
+  LT: 'LT',
+  ML: 'ML',
+  M3: 'M3',
+  DU: 'DU',
+  SC: 'SC'
+};
+
+exports.ProductStatus = exports.$Enums.ProductStatus = {
+  ACTIVE: 'ACTIVE',
+  PENDING: 'PENDING',
+  INACTIVE: 'INACTIVE'
+};
+
+exports.StatusOrder = exports.$Enums.StatusOrder = {
+  PENDING: 'PENDING',
+  DELIVERED: 'DELIVERED',
+  CANCELED: 'CANCELED',
+  SHIPPED: 'SHIPPED',
+  SEPARATED: 'SEPARATED',
+  SEPARATING: 'SEPARATING',
+  REJECTED: 'REJECTED',
+  PENDING_CONFIRMATION: 'PENDING_CONFIRMATION'
+};
+
+exports.Prisma.ModelName = {
+  Address: 'Address',
+  Profile: 'Profile',
+  Store: 'Store',
+  Invoice: 'Invoice',
+  ProfileStore: 'ProfileStore',
+  Shipping: 'Shipping',
+  Plan: 'Plan',
+  ZipCode: 'ZipCode',
+  Slide: 'Slide',
+  Department: 'Department',
+  Category: 'Category',
+  SubCategory: 'SubCategory',
+  Brand: 'Brand',
+  Product: 'Product',
+  Price: 'Price',
+  Stock: 'Stock',
+  ProductImage: 'ProductImage',
+  Tag: 'Tag',
+  ProductTag: 'ProductTag',
+  Order: 'Order',
+  ShoppingCart: 'ShoppingCart',
+  AuthUser: 'AuthUser'
+};
+
+/**
+ * This is a stub Prisma Client that will error at runtime if called.
+ */
+class PrismaClient {
+  constructor() {
+    return new Proxy(this, {
+      get(target, prop) {
+        let message
+        const runtime = getRuntime()
+        if (runtime.isEdge) {
+          message = `PrismaClient is not configured to run in ${runtime.prettyName}. In order to run Prisma Client on edge runtime, either:
+- Use Prisma Accelerate: https://pris.ly/d/accelerate
+- Use Driver Adapters: https://pris.ly/d/driver-adapters
+`;
+        } else {
+          message = 'PrismaClient is unable to run in this browser environment, or has been bundled for the browser (running in `' + runtime.prettyName + '`).'
+        }
+
+        message += `
+If this is unexpected, please open an issue: https://pris.ly/prisma-prisma-bug-report`
+
+        throw new Error(message)
+      }
+    })
+  }
+}
+
+exports.PrismaClient = PrismaClient
+
+Object.assign(exports, Prisma)

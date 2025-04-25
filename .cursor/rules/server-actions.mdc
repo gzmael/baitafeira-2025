@@ -1,0 +1,85 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Server Actions
+
+The server actions provides a secure way to handle actions with authentication, rate limiting, and error handling.
+
+## Format and Structure
+Server actions should follow this format:
+
+Files:
+- `src/actions/ENTITY/crud-entity-action.validation.ts`
+- `src/validators/entity.ts`
+
+## Core Components
+
+The main implementation is in [src/actions/safe-action.ts](mdc:src/actions/safe-action.ts) which exports three main clients:
+
+1. `actionClient` - Basic safe action client with error handling
+2. `actionClientWithMeta` - Extended client that supports metadata
+3. `authActionClient` - Full featured client with authentication, rate limiting, and analytics
+
+
+## Usage Guidelines
+
+1. Use `authActionClient` for authenticated endpoints that need user context
+2. Use `actionClientWithMeta` when you need metadata but not auth
+3. Use base `actionClient` for simple server actions
+   
+## Implementation Guidelines
+
+- Create LogEvent if need
+- Create separate schema in validator file
+- Revalidate Tag or Path if need
+- Use profile in ctx to get the auth profile
+- Export typed responses for client usage
+
+## Practical Example
+
+Here's an example of using `authActionClient` from @src/actions/tags/create-tag-action.ts:
+
+```typescript
+export const createTagAction = authActionClient
+  .schema(createTagSchema)           // Input validation
+  .metadata({                        // Action metadata
+    name: 'Create Tag',
+    track: {
+      event: LogEvents.CreateTag.name,
+      channel: LogEvents.CreateTag.channel,
+    },
+  })
+  .action(async ({ parsedInput: params, ctx: { profile } }) => {
+    // Access to validated input and context
+    // Role-based authorization
+    // Business logic implementation
+    // Cache revalidation
+  })
+```
+
+This example demonstrates:
+- Schema validation with Zod
+- Analytics tracking setup
+- Access to authenticated user context
+- Role-based authorization
+- Error handling
+- Cache management
+
+## Error Cases
+
+The system handles several error scenarios:
+- Unauthorized access
+- Missing store/user profiles
+- Rate limit exceeded
+- General server errors
+
+## Development Mode
+
+In development:
+- Detailed logging of inputs, results, and metadata
+- Full error stack traces
+- Rate limiting still applies
+
+

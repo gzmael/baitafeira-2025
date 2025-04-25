@@ -1,0 +1,562 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["views", "fullTextSearchPostgres"]
+  output          = "../src/generated/prisma/client"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Address {
+  id           String   @id @default(cuid())
+  name         String
+  zipCode      String   @db.VarChar(8)
+  city         String
+  state        String   @db.VarChar(2)
+  street       String
+  number       String
+  neighborhood String
+  reference    String?
+  complement   String?
+  latitude     Float?
+  longitude    Float?
+  isMain       Boolean  @default(false)
+  profileId    String?
+  profile      Profile? @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  storeId      String?  @unique
+  store        Store?   @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([profileId])
+  @@index([storeId])
+  @@map("addresses")
+}
+
+model Profile {
+  id           String         @id @default(cuid())
+  name         String
+  lastName     String
+  cpf          String?        @unique
+  birthDate    DateTime?
+  phone        String?        @unique
+  status       StatusUser     @default(INACTIVE)
+  typeUser     TypeUser       @default(USER)
+  preferences  Json?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  inactiveAt   DateTime?
+  userId       String         @unique @db.Uuid
+  addresses    Address[]
+  Order        Order[]
+  ShoppingCart ShoppingCart[]
+
+  @@map("profiles")
+}
+
+model Store {
+  id               String         @id @default(cuid())
+  name             String
+  nameResponsible  String
+  reasonSocial     String
+  cnpj             String         @unique @db.VarChar(14)
+  phone            String?        @db.VarChar(11)
+  phoneResponsible String?        @db.VarChar(11)
+  image            String?
+  status           StatusStore    @default(INACTIVE)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  inactiveAt       DateTime?
+  deletedAt        DateTime?
+  profileStore     ProfileStore[]
+  slides           Slide[]
+  zipCodes         ZipCode[]
+  planId           String?
+  plan             Plan?          @relation(fields: [planId], references: [id], onDelete: Cascade)
+  address          Address?
+  shippings        Shipping?
+  invoices         Invoice[]
+  prices           Price[]
+  orders           Order[]
+  shoppingCarts    ShoppingCart[]
+
+  @@index([planId])
+  @@map("stores")
+}
+
+model Invoice {
+  id            String        @id @default(cuid())
+  amount        Int
+  dueDate       DateTime
+  paymentDate   DateTime?
+  description   String?
+  paymentMethod PaymentMethod @default(PIX)
+  status        StatusInvoice @default(PENDING)
+  storeId       String
+  store         Store         @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  canceledAt    DateTime?
+
+  @@index([storeId])
+  @@map("invoices")
+}
+
+model ProfileStore {
+  id          String        @id @default(cuid())
+  userId      String        @unique
+  name        String
+  lastName    String
+  phone       String?       @unique
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  inactiveAt  DateTime?
+  storeId     String
+  status      StatusUser    @default(INACTIVE)
+  typeUser    StoreTypeUser @default(SELLER)
+  store       Store?        @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  preferences Json?
+
+  @@index([storeId])
+  @@map("profiles_stores")
+}
+
+model Shipping {
+  id            String       @id @default(cuid())
+  type          ShippingType @default(FREE)
+  attributes    Json?
+  minimumAmount Int?
+  storeId       String       @unique
+  store         Store        @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  @@index([storeId])
+  @@map("shippings")
+}
+
+model Plan {
+  id          String @id @default(cuid())
+  name        String @unique
+  description String @default("")
+  cost        Int    @default(0)
+  period      Int    @default(1)
+  attributes  Json?
+
+  type   PlanType @default(MONTHLY)
+  stores Store[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("plans")
+}
+
+model ZipCode {
+  id       String  @id @default(cuid())
+  zipCode  String  @unique @db.VarChar(8)
+  ibgeCode String  @db.VarChar(7)
+  city     String
+  state    String  @db.VarChar(2)
+  stores   Store[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("zip_codes")
+}
+
+model Slide {
+  id          String  @id @default(cuid())
+  imageName   String
+  image       String
+  highlighted Boolean @default(false)
+  url         String
+  storeId     String
+  store       Store?  @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  @@index([storeId])
+  @@map("slides")
+}
+
+model Department {
+  id   String @id @default(cuid())
+  name String
+  slug String @unique
+
+  imageUrl String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  categories Category[]
+  products   Product[]
+
+  @@map("departments")
+}
+
+model Category {
+  id            String        @id @default(cuid())
+  name          String
+  slug          String        @unique
+  departmentId  String
+  department    Department    @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+  subCategories SubCategory[]
+  products      Product[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([departmentId])
+  @@map("categories")
+}
+
+model SubCategory {
+  id         String @id @default(cuid())
+  name       String
+  slug       String @unique
+  categoryId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  category Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  products Product[]
+
+  @@index([categoryId])
+  @@map("sub_categories")
+}
+
+model Brand {
+  id    String  @id @default(cuid())
+  name  String
+  slug  String  @unique
+  color String?
+
+  imageUrl     String?
+  productImage String?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  products  Product[]
+
+  @@map("brands")
+}
+
+enum ProductStatus {
+  ACTIVE
+  PENDING
+  INACTIVE
+
+  @@map("product_status")
+}
+
+model Product {
+  id      String @id @default(cuid())
+  name    String
+  slug    String @unique
+  barCode String @unique
+
+  description  String?
+  isFractional Boolean   @default(false)
+  unitType     UnitType?
+  quantity     Int?
+
+  status ProductStatus @default(PENDING)
+
+  subCategoryId String?
+  subCategory   SubCategory? @relation(fields: [subCategoryId], references: [id], onDelete: Cascade)
+
+  departmentId String?
+  department   Department? @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+
+  categoryId String?
+  category   Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  brandId String?
+  brand   Brand?  @relation(fields: [brandId], references: [id], onDelete: Cascade)
+
+  productImages ProductImage[]
+  prices        Price[]
+  productTags   ProductTag[]
+
+  createdBy String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([subCategoryId])
+  @@index([brandId])
+  @@map("products")
+}
+
+model Price {
+  id             String    @id @default(cuid())
+  cost           Int
+  offerCost      Int?
+  offerStartDate DateTime?
+  offerEndDate   DateTime?
+  isOffer        Boolean   @default(false)
+  isFeatured     Boolean   @default(false)
+  updatedBy      String?
+  maxUnits       Int       @default(5)
+
+  isEnabledSale    Boolean @default(true)
+  isFractionalSale Boolean @default(false)
+
+  stock Stock?
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  storeId   String
+  store     Store   @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([productId])
+  @@index([storeId])
+  @@map("prices")
+}
+
+model Stock {
+  id       String @id @default(cuid())
+  quantity Int    @default(0)
+  minAlert Int    @default(5)
+
+  priceId String @unique
+  price   Price  @relation(fields: [priceId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([priceId])
+  @@map("stocks")
+}
+
+model ProductImage {
+  id        String @id @default(cuid())
+  imageUrl  String
+  imageName String
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([productId])
+  @@map("product_images")
+}
+
+model Tag {
+  id   String @id @default(cuid())
+  name String
+  slug String @unique
+
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  productTags ProductTag[]
+
+  @@map("tags")
+}
+
+model ProductTag {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  tagId     String
+  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([productId, tagId])
+  @@index([productId])
+  @@index([tagId])
+  @@map("product_tags")
+}
+
+model Order {
+  id            String        @id @default(cuid())
+  number        String        @unique
+  total         Int
+  amount        Int
+  discount      Int
+  shipping      Int
+  items         Json
+  address       Json          @default("{}")
+  status        StatusOrder   @default(PENDING)
+  paymentMethod PaymentMethod @default(PIX)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  storeId   String
+  store     Store   @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  @@index([storeId])
+  @@map("orders")
+}
+
+model ShoppingCart {
+  id    String @id @default(cuid())
+  items Json
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  storeId   String?
+  store     Store?  @relation(fields: [storeId], references: [id], onDelete: SetNull)
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@index([profileId])
+  @@index([storeId])
+  @@map("shopping_carts")
+}
+
+enum TypeUser {
+  ADMIN
+  USER
+
+  @@map("type_users")
+}
+
+enum StatusUser {
+  ACTIVE
+  INACTIVE
+  BLOCKED
+
+  @@map("status_users")
+}
+
+enum StatusStore {
+  ACTIVE
+  INACTIVE
+  DELETED
+
+  @@map("status_stores")
+}
+
+enum PlanType {
+  MONTHLY
+  YEARLY
+
+  @@map("plan_types")
+}
+
+enum StoreTypeUser {
+  MANAGER
+  SELLER
+
+  @@map("store_type_users")
+}
+
+enum ShippingType {
+  FIXED
+  FREE
+  NEIGHBORHOOD
+  DYNAMIC
+
+  @@map("shipping_types")
+}
+
+enum StatusInvoice {
+  PENDING
+  PAID
+  CANCELED
+
+  @@map("status_invoices")
+}
+
+enum PaymentMethod {
+  PIX
+  CREDIT_CARD
+  DEBIT_CARD
+  BANK_SLIP
+  MONEY
+
+  @@map("payment_methods")
+}
+
+enum StatusOrder {
+  PENDING
+  DELIVERED
+  CANCELED
+  SHIPPED
+  SEPARATED
+  SEPARATING
+  REJECTED
+  PENDING_CONFIRMATION
+
+  @@map("status_orders")
+}
+
+enum UnitType {
+  M2
+  CM
+  ME
+  UN
+  CT
+  CX
+  PA
+  PC
+  PT
+  RL
+  KG
+  GR
+  LT
+  ML
+  M3
+  DU
+  SC
+}
+
+view AuthUser {
+  instance_id                 String?   @db.Uuid
+  id                          String    @id @unique @db.Uuid
+  aud                         String?   @db.VarChar(255)
+  role                        String?   @db.VarChar(255)
+  email                       String?   @db.VarChar(255)
+  encrypted_password          String?   @db.VarChar(255)
+  email_confirmed_at          DateTime? @db.Timestamptz(6)
+  invited_at                  DateTime? @db.Timestamptz(6)
+  confirmation_token          String?   @db.VarChar(255)
+  confirmation_sent_at        DateTime? @db.Timestamptz(6)
+  recovery_token              String?   @db.VarChar(255)
+  recovery_sent_at            DateTime? @db.Timestamptz(6)
+  email_change_token_new      String?   @db.VarChar(255)
+  email_change                String?   @db.VarChar(255)
+  email_change_sent_at        DateTime? @db.Timestamptz(6)
+  last_sign_in_at             DateTime? @db.Timestamptz(6)
+  raw_app_meta_data           Json?
+  raw_user_meta_data          Json?
+  is_super_admin              Boolean?
+  created_at                  DateTime? @db.Timestamptz(6)
+  updated_at                  DateTime? @db.Timestamptz(6)
+  phone                       String?   @unique
+  phone_confirmed_at          DateTime? @db.Timestamptz(6)
+  phone_change                String?   @default("")
+  phone_change_token          String?   @default("") @db.VarChar(255)
+  phone_change_sent_at        DateTime? @db.Timestamptz(6)
+  confirmed_at                DateTime? @default(dbgenerated("LEAST(email_confirmed_at, phone_confirmed_at)")) @db.Timestamptz(6)
+  email_change_token_current  String?   @default("") @db.VarChar(255)
+  email_change_confirm_status Int?      @default(0) @db.SmallInt
+  banned_until                DateTime? @db.Timestamptz(6)
+  reauthentication_token      String?   @default("") @db.VarChar(255)
+  reauthentication_sent_at    DateTime? @db.Timestamptz(6)
+  is_sso_user                 Boolean   @default(false)
+  deleted_at                  DateTime? @db.Timestamptz(6)
+
+  @@index([instance_id])
+  @@map("auth_users")
+}

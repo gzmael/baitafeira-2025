@@ -1,0 +1,135 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: UI component and styling guidelines using Shadcn UI, Radix UI, and Tailwind
+globs: 
+alwaysApply: false
+---
+# UI Components and Styling
+
+## UI Framework
+- Use Shadcn UI and Tailwind for components and styling
+- Implement responsive design with Tailwind CSS using a mobile-first approach
+- When the component has variant, create a folder and split code and style: input/index.tsx and input/styles.ts
+- Use `next/image` package for images
+- Always use icons.tsx component to import icons
+
+## Install new Shadcn components
+
+```sh
+bunx --bun shadcn@latest add COMPONENT
+```
+
+Example:
+
+```sh
+bunx --bun shadcn@latest add progress
+```
+
+## Split the Component into Two Files
+If the component has variants, separate the component and styles into a folder.
+
+Example structure:
+``` components/ui/input 
+    ├── index.tsx 
+    └── styles.ts 
+```
+
+File index.tsx
+```tsx
+import { type ComponentProps, forwardRef } from 'react'
+
+import { cn } from '@/lib/utils'
+
+import { type InputVariantProps, inputVariants } from './styles'
+
+export type InputProps = ComponentProps<'input'> & InputVariantProps
+
+const Input = forwardRef<HTMLInputElement, InputProps>(
+  ({ className, type, radii, scale, ...props }, ref) => {
+    return (
+      <input
+        type={type}
+        className={cn(inputVariants({ radii, scale, className }))}
+        ref={ref}
+        {...props}
+      />
+    )
+  },
+)
+Input.displayName = 'Input'
+
+export { Input, inputVariants }
+```
+
+File styles.ts
+```ts
+import { type VariantProps, cva } from 'class-variance-authority'
+
+export const inputVariants = cva(
+  'flex-col items-start ...baseStyle',
+  {
+    variants: {
+      radii: {
+        md: 'rounded-md',
+      },
+      scale: {
+        sm: 'h-8',
+        md: 'h-9',
+      },
+    },
+    defaultVariants: {
+      radii: 'md',
+      scale: 'md',
+    },
+  },
+)
+
+export type InputVariantProps = VariantProps<typeof inputVariants>
+
+
+```
+
+## Loading on Buttons
+Use the `LoadingOnButton` component to handle loading states into buttons:
+
+```tsx
+<Button>
+  <LoadingOnButton
+      isLoading={isSubmitting || isPending}
+      defaultText="Cadastrar"
+      onActionText="Cadastrando..."
+    />
+</Button>
+```
+
+## Form Components
+### Text Inputs
+```tsx
+<Input
+  type="email"
+  name="email"
+  label="Email"
+  registerProps={register("email", { required: true })}
+  error={errors.email}
+/>
+```
+
+### Text Area
+```tsx
+<Input
+  type="text"
+  autosizeTextarea
+  rows={3}
+  name="message"
+  placeholder="Paste in email content"
+  registerProps={register("message", { required: true })}
+  error={errors.message}
+/>
+
+
+
+``` 

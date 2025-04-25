@@ -1,24 +1,29 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Baita Feira 2025
+
+A modern e-commerce platform for local markets and fairs.
 
 ## Getting Started
 
-First, run the development server:
+This project uses Next.js and TypeScript. To get started:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Run the development server: `npm run dev`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Modern e-commerce platform
+- Local market integration
+- Real-time inventory management
+- User-friendly interface
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Tech Stack
+
+- Next.js
+- TypeScript
+- Prisma
+- Tailwind CSS
+- PostgreSQL
 
 ## Learn More
 
