@@ -53,7 +53,7 @@
       height: var(--radix-accordion-content-height);
     }
   }
-  
+
   @keyframes accordion-up {
     from {
       height: var(--radix-accordion-content-height);
@@ -63,9 +63,7 @@
     }
   }
 
-  
 }
-
 
 @utility container {
   margin-inline: auto;
@@ -118,7 +116,7 @@
   --border: oklch(0.906 0.015 262.251);
   --input: oklch(0.906 0.015 262.251);
   --ring: oklch(0.482 0.168 142.492);
-  
+
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -154,7 +152,7 @@
   --border: oklch(0.298 0.015 262.251);
   --input: oklch(0.298 0.015 262.251);
   --ring: oklch(0.645 0.168 142.492);
-  
+
   --chart-1: oklch(0.627 0.224 250.104);
   --chart-2: oklch(0.627 0.168 170);
   --chart-3: oklch(0.682 0.224 50);
@@ -276,4 +274,16 @@
 .leaflet-pane,
 .leaflet-top {
   z-index: 0 !important;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+
+  }
+  body {
+    @apply bg-background text-foreground;
+
+  }
+
 }

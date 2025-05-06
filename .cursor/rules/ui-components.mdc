@@ -16,6 +16,17 @@ alwaysApply: false
 - When the component has variant, create a folder and split code and style: input/index.tsx and input/styles.ts
 - Use `next/image` package for images
 - Always use icons.tsx component to import icons
+- Avoid import all modules from React, import each one separately, like import { useState } from 'react' and not import type * as React from 'react'
+  
+
+## React Type Imports
+- Do **not** use `import type * as React from 'react'`.
+- Instead, import only the required types directly, e.g.:
+  ```ts
+  import { type ComponentProps } from 'react'
+  ```
+- This keeps imports minimal and clear, and matches the pattern used in other UI components.
+
 
 ## Install new Shadcn components
 
@@ -33,7 +44,7 @@ bunx --bun shadcn@latest add progress
 If the component has variants, separate the component and styles into a folder.
 
 Example structure:
-``` components/ui/input 
+``` src/components/ui/input 
     ├── index.tsx 
     └── styles.ts 
 ```
@@ -105,31 +116,3 @@ Use the `LoadingOnButton` component to handle loading states into buttons:
     />
 </Button>
 ```
-
-## Form Components
-### Text Inputs
-```tsx
-<Input
-  type="email"
-  name="email"
-  label="Email"
-  registerProps={register("email", { required: true })}
-  error={errors.email}
-/>
-```
-
-### Text Area
-```tsx
-<Input
-  type="text"
-  autosizeTextarea
-  rows={3}
-  name="message"
-  placeholder="Paste in email content"
-  registerProps={register("message", { required: true })}
-  error={errors.message}
-/>
-
-
-
-``` 

@@ -42,7 +42,11 @@
         "useAltText": "warn"
       },
       "nursery": {
-        "useSortedClasses": "error"
+        "useSortedClasses": {
+          "fix": "safe",
+          "level": "error",
+          "options": {}
+        }
       },
       "correctness": {
         "useExhaustiveDependencies": "error"
