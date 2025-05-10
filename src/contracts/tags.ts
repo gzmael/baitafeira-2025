@@ -1,4 +1,4 @@
-import type { Tag } from '@prisma/client'
+import type { Tag } from '@/generated/prisma/client'
 
 import type { FindGenericList } from './commons'
 

@@ -1,4 +1,4 @@
-import type { Prisma, StoreTypeUser, TypeUser } from '@prisma/client'
+import type { Prisma, StoreTypeUser, TypeUser } from '@/generated/prisma/client'
 
 import type { CreateProfileSchemaType } from '@/validators/profileValidator'
 

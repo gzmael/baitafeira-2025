@@ -1,4 +1,4 @@
-import type { Department } from '@prisma/client'
+import type { Department } from '@/generated/prisma/client'
 
 import type { FindGenericList } from './commons'
 

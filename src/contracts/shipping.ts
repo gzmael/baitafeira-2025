@@ -1,4 +1,4 @@
-import type { Prisma, ShippingType } from '@prisma/client'
+import type { Prisma, ShippingType } from '@/generated/prisma/client'
 
 import type { GeneralShippingSchemaType } from '@/validators/shippingValidator'
 

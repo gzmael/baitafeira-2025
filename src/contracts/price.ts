@@ -1,4 +1,4 @@
-import type { Price } from '@prisma/client'
+import type { Price } from '@/generated/prisma/client'
 
 import type { FindGenericList } from './commons'
 

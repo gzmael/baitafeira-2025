@@ -1,4 +1,4 @@
-import type { ZipCode } from '@prisma/client'
+import type { ZipCode } from '@/generated/prisma/client'
 
 import type { FindGenericList } from './commons'
 

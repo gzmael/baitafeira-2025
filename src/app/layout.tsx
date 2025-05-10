@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
 import { Inter as FontSans } from 'next/font/google'
 import './globals.css'
+import { TailwindIndicator } from '@/components/tailwind-indicator'
+import { Toaster } from '@/components/ui/sonner'
+import Providers from './_components/providers'
 
 const fontSans = FontSans({
   subsets: ['latin'],
@@ -18,8 +21,15 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="pt-BR">
-      <body className={`${fontSans.variable}`}>{children}</body>
+    <html lang="pt-BR" suppressHydrationWarning>
+      <body className={fontSans.variable}>
+        <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+        <Providers>
+          <main>{children}</main>
+        </Providers>
+        <TailwindIndicator />
+        <Toaster />
+      </body>
     </html>
   )
 }

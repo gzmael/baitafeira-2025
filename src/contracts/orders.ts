@@ -1,4 +1,9 @@
-import type { Order, PaymentMethod, Prisma, StatusOrder } from '@prisma/client'
+import type {
+  Order,
+  PaymentMethod,
+  Prisma,
+  StatusOrder,
+} from '@/generated/prisma/client'
 
 import type { FindGenericList } from './commons'
 

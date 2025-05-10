@@ -5,7 +5,7 @@ import type {
   ProductStatus,
   ProductTag,
   SubCategory,
-} from '@prisma/client'
+} from '@/generated/prisma/client'
 
 import type { FindGenericList } from './commons'
 

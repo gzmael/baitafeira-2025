@@ -1,4 +1,4 @@
-import type { AuthUser, ProfileStore } from '@prisma/client'
+import type { AuthUser, ProfileStore } from '@/generated/prisma/client'
 
 import type { FindGenericList } from './commons'
 

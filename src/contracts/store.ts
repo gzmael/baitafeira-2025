@@ -1,4 +1,4 @@
-import type { StatusStore, Store } from '@prisma/client'
+import type { StatusStore, Store } from '@/generated/prisma/client'
 
 import type { SignUpStoreSchemaType } from '@/validators'
 

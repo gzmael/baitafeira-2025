@@ -1,4 +1,4 @@
-import type { SubCategory } from '@prisma/client'
+import type { SubCategory } from '@/generated/prisma/client'
 
 import type { FindGenericList } from './commons'
 
