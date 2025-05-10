@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <body className={fontSans.variable}>
-        <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+        {/* <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} /> */}
         <Providers>
           <main>{children}</main>
         </Providers>

@@ -1,4 +1,4 @@
-import { StoreTypeUser, TypeUser } from '@prisma/client'
+import { StoreTypeUser, TypeUser } from '@/generated/prisma/client'
 import { type ClassValue, clsx } from 'clsx'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
